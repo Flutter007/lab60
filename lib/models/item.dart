@@ -1,4 +1,5 @@
 class Item {
+  final String? id;
   final String name;
   final String itemCategoryId;
   final String itemLocationId;
@@ -7,6 +8,7 @@ class Item {
   final DateTime addedAt;
 
   Item({
+    this.id,
     required this.name,
     required this.itemCategoryId,
     required this.itemLocationId,
@@ -27,6 +29,7 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
+      id: json['id'],
       name: json['name'],
       itemCategoryId: json['itemCategoryId'],
       itemLocationId: json['itemLocationId'],

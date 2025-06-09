@@ -8,9 +8,7 @@ final itemsCategoriesProvider = Provider<List<ItemCategory>>((ref) {
   return itemCategories;
 });
 
-final selectedItemCategory = StateProvider<ItemCategory?>((ref) {
-  return null;
-});
+final selectedItemCategory = StateProvider<String?>((ref) => null);
 
 final itemCategoryByIdProvider = Provider.family<ItemCategory, String>((
   ref,
@@ -24,9 +22,7 @@ final itemsLocationProvider = Provider<List<ItemLocation>>((ref) {
   return itemLocations;
 });
 
-final selectedItemLocation = StateProvider<ItemLocation?>((ref) {
-  return null;
-});
+final selectedItemLocation = StateProvider<String?>((ref) => null);
 
 final itemLocationByIdProvider = Provider.family<ItemLocation, String>((
   ref,
