@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/helpers/requets.dart';
 import 'package:lab60/models/item.dart';
 import 'package:lab60/widgets/add_item_form/add_item_form_controllers.dart';
-import 'items_locations_categories_providers.dart';
+import 'items_locations_categories_date_providers.dart';
 
 final baseURl =
     'https://my-db-7777-default-rtdb.europe-west1.firebasedatabase.app';
@@ -18,6 +18,14 @@ final itemListProvider = FutureProvider<List<Item>>((ref) async {
     final item = Item.fromJson({...response[key], 'id': key});
     items.add(item);
   }
+
+  items.sort((a, b) {
+    int dateCompare = b.registeredAt.compareTo(a.registeredAt);
+    if (dateCompare == 0) {
+      return a.name.trim().toLowerCase().compareTo(b.name.trim().toLowerCase());
+    }
+    return dateCompare;
+  });
   return items;
 });
 
@@ -40,7 +48,7 @@ class CreateItemNotifier extends AsyncNotifier<void> {
             controller.descriptionController.text.trim().isEmpty
                 ? null
                 : controller.descriptionController.text.trim(),
-        addedAt: selectedDate,
+        registeredAt: selectedDate,
       );
       await request(url, method: 'POST', body: item.toJson());
     });
@@ -50,4 +58,14 @@ class CreateItemNotifier extends AsyncNotifier<void> {
 final createItemProvider = AsyncNotifierProvider<CreateItemNotifier, void>(
   CreateItemNotifier.new,
 );
-final selectedDateProvider = StateProvider<DateTime>((ref) => DateTime.now());
+
+final singleItemProvider = FutureProvider.family<Item?, String>((
+  ref,
+  itemId,
+) async {
+  final url = '$baseURl/items/$itemId.json';
+  final response = await request(url);
+  if (response == null) return null;
+  final item = Item.fromJson({...response, 'id': itemId});
+  return item;
+});

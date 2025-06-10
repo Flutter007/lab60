@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:lab60/widgets/add_item_form/add_item_form_controllers.dart';
 import 'package:lab60/widgets/center_indicator.dart';
-import '../../providers/items_locations_categories_providers.dart';
+import '../../helpers/date_format.dart';
+import '../../providers/items_locations_categories_date_providers.dart';
 import '../../providers/items_provider.dart';
 import '../custom_text_form_field.dart';
 
@@ -25,7 +25,6 @@ class AddItemForm extends ConsumerStatefulWidget {
 }
 
 class _AddItemFormState extends ConsumerState<AddItemForm> {
-  final dateFormat = DateFormat('dd.MM.yyyy');
   final DateTime now = DateTime.now();
 
   @override
@@ -39,7 +38,7 @@ class _AddItemFormState extends ConsumerState<AddItemForm> {
     final DateTime? dateTime = await showDatePicker(
       context: context,
       firstDate: DateTime(now.year, now.month - 1, now.day),
-      lastDate: DateTime(now.year, now.month, now.day + 1),
+      lastDate: DateTime(now.year, now.month, now.day),
     );
     if (dateTime != null) {
       ref.read(selectedDateProvider.notifier).state = dateTime;
@@ -121,6 +120,13 @@ class _AddItemFormState extends ConsumerState<AddItemForm> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter image link';
                 }
+                bool isLinkRight =
+                    value.contains('www') ||
+                    value.contains('http') ||
+                    value.contains('https');
+                if (!isLinkRight) {
+                  return 'Please enter correct link';
+                }
                 return null;
               },
               controller: widget.controllers.imageURLController,
@@ -137,7 +143,20 @@ class _AddItemFormState extends ConsumerState<AddItemForm> {
             ElevatedButton(
               onPressed: itemAddingState.isLoading ? null : widget.addNewItem,
               child:
-                  itemAddingState.isLoading ? CenterIndicator() : Text('Add +'),
+                  itemAddingState.isLoading
+                      ? Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Loading...'),
+                          SizedBox(width: 8),
+                          SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CenterIndicator(),
+                          ),
+                        ],
+                      )
+                      : Text('Add item'),
             ),
           ],
         ),

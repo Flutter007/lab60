@@ -14,8 +14,8 @@ final itemCategoryByIdProvider = Provider.family<ItemCategory, String>((
   ref,
   id,
 ) {
-  final colors = ref.watch(itemsCategoriesProvider);
-  return colors.firstWhere((c) => c.id == id);
+  final categories = ref.watch(itemsCategoriesProvider);
+  return categories.firstWhere((c) => c.id == id);
 });
 
 final itemsLocationProvider = Provider<List<ItemLocation>>((ref) {
@@ -28,6 +28,11 @@ final itemLocationByIdProvider = Provider.family<ItemLocation, String>((
   ref,
   id,
 ) {
-  final colors = ref.watch(itemsLocationProvider);
-  return colors.firstWhere((c) => c.id == id);
+  final locations = ref.watch(itemsLocationProvider);
+  return locations.firstWhere((c) => c.id == id);
 });
+
+final selectedDateProvider = StateProvider<DateTime>(
+  (ref) =>
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+);

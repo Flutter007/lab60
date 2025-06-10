@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CenterContainer extends StatelessWidget {
+class CenterEventContainer extends StatelessWidget {
   final String title;
   final IconData iconData;
   final String buttonText;
   final void Function() onButtonPressed;
-  const CenterContainer({
+  const CenterEventContainer({
     super.key,
     required this.title,
     required this.iconData,
@@ -25,11 +25,15 @@ class CenterContainer extends StatelessWidget {
             children: [
               Icon(iconData, size: 100, color: theme.colorScheme.primary),
               SizedBox(height: 16),
-              Text(title, style: theme.textTheme.titleMedium),
+              Text(title, style: theme.textTheme.titleLarge),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: onButtonPressed,
+                child: Text(buttonText),
+              ),
             ],
           ),
         ),
-        ElevatedButton(onPressed: onButtonPressed, child: Text(buttonText)),
       ],
     );
   }

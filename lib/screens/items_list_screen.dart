@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/screens/add_item_screen.dart';
 
 import '../providers/items_provider.dart';
-import '../widgets/center_container.dart';
+import '../widgets/center_event_container.dart';
 import '../widgets/center_indicator.dart';
+import '../widgets/items_list_view_builder.dart';
 
 class ItemsListScreen extends ConsumerStatefulWidget {
   const ItemsListScreen({super.key});
@@ -15,29 +16,32 @@ class ItemsListScreen extends ConsumerStatefulWidget {
 
 class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
   void goToAddScreen() async {
-    await Navigator.of(
+    final result = await Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (ctx) => AddItemScreen()));
+    if (result == true) {
+      ref.invalidate(itemListProvider);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final itemState = ref.watch(itemListProvider);
     Widget body = switch (itemState) {
-      AsyncData(value: final item) =>
-        item.isEmpty
-            ? CenterContainer(
+      AsyncData(value: final items) =>
+        items.isEmpty
+            ? CenterEventContainer(
               title: 'No items',
               iconData: Icons.list,
               buttonText: 'Add item',
               onButtonPressed: goToAddScreen,
             )
-            : Center(child: Text('Something is Here')),
-      AsyncError() => CenterContainer(
-        title: 'Something went wrong',
+            : ItemsListViewBuilder(items: items),
+      AsyncError() => CenterEventContainer(
+        title: 'Something went wrong..',
         iconData: Icons.error,
         buttonText: 'Try again',
-        onButtonPressed: () => ref.invalidate(itemListProvider),
+        onButtonPressed: () => ref.refresh(itemListProvider),
       ),
       _ => CenterIndicator(),
     };

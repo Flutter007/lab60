@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/providers/items_provider.dart';
 import 'package:lab60/widgets/add_item_form/add_item_form.dart';
 
-import '../providers/items_locations_categories_providers.dart';
+import '../providers/items_locations_categories_date_providers.dart';
 import '../widgets/add_item_form/add_item_form_controllers.dart';
 
 class AddItemScreen extends ConsumerStatefulWidget {
@@ -28,7 +28,7 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
     return isCategoryError || isLocationError;
   }
 
-  void _showScaffoldMesage(String txt) {
+  void _showScaffoldMessage(String txt) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(txt)));
   }
 
@@ -37,8 +37,8 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
     if (controllers.formKey.currentState!.validate() && !isSelectedError) {
       await ref.read(createItemProvider.notifier).createItem(controllers);
       if (mounted) {
-        _showScaffoldMesage('Item added');
         clearControllers();
+        Navigator.pop(context, true);
       }
     }
   }
@@ -47,10 +47,10 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
     ref.listen(createItemProvider, (prev, next) {
       next.whenOrNull(
         data: (d) {
-          _showScaffoldMesage('Successfully added');
+          _showScaffoldMessage('Successfully added');
         },
         error: (e, stack) {
-          _showScaffoldMesage(e.toString());
+          _showScaffoldMessage('Something went wrong...');
         },
       );
     });
@@ -65,7 +65,11 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
     controllers.dateController.clear();
     ref.read(selectedItemCategory.notifier).state = null;
     ref.read(selectedItemLocation.notifier).state = null;
-    ref.read(selectedDateProvider.notifier).state = DateTime.now();
+    ref.read(selectedDateProvider.notifier).state = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
   }
 
   @override

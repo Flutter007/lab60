@@ -5,7 +5,7 @@ class Item {
   final String itemLocationId;
   final String? description;
   final String imageURL;
-  final DateTime addedAt;
+  final DateTime registeredAt;
 
   Item({
     this.id,
@@ -14,7 +14,7 @@ class Item {
     required this.itemLocationId,
     this.description,
     required this.imageURL,
-    required this.addedAt,
+    required this.registeredAt,
   });
   Map<String?, dynamic> toJson() {
     return {
@@ -23,7 +23,7 @@ class Item {
       'itemLocationId': itemLocationId,
       if (description != null) 'description': description,
       'imageURL': imageURL,
-      'addedAt': addedAt.toUtc().toIso8601String(),
+      'registeredAt': registeredAt.toUtc().toIso8601String(),
     };
   }
 
@@ -35,7 +35,7 @@ class Item {
       itemLocationId: json['itemLocationId'],
       description: json.containsKey('description') ? json['description'] : null,
       imageURL: json['imageURL'],
-      addedAt: DateTime.parse(json['addedAt']),
+      registeredAt: DateTime.parse(json['registeredAt']),
     );
   }
 }
