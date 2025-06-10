@@ -19,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextFormField(

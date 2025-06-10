@@ -7,6 +7,7 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final titleMedium = Theme.of(context).textTheme.titleMedium;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Text(

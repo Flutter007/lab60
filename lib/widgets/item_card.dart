@@ -16,6 +16,7 @@ class ItemCard extends ConsumerWidget {
         ref.watch(itemCategoryByIdProvider(item.itemCategoryId)).title;
     final itemLocation =
         ref.watch(itemLocationByIdProvider(item.itemLocationId)).title;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: InkWell(

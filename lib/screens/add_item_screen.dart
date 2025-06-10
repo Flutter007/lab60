@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/providers/items_provider.dart';
 import 'package:lab60/widgets/add_item_form/add_item_form.dart';
-
 import '../providers/items_locations_categories_date_providers.dart';
 import '../widgets/add_item_form/add_item_form_controllers.dart';
 
@@ -81,6 +80,7 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
   @override
   Widget build(BuildContext context) {
     checkStatusOfAction();
+
     return Scaffold(
       appBar: AppBar(title: Text('Add item to BD')),
       body: SingleChildScrollView(

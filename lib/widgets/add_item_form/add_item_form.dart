@@ -55,6 +55,7 @@ class _AddItemFormState extends ConsumerState<AddItemForm> {
     final itemLocation = ref.watch(selectedItemLocation);
     final itemLocationsProvider = ref.watch(itemsLocationProvider);
     final itemAddingState = ref.watch(createItemProvider);
+
     return Form(
       key: widget.controllers.formKey,
       child: SingleChildScrollView(

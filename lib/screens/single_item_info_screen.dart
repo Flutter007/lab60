@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/providers/items_provider.dart';
 import 'package:lab60/widgets/single_item_info.dart';
-
 import '../widgets/center_event_container.dart';
 
 class SingleItemInfoScreen extends ConsumerStatefulWidget {
@@ -17,6 +16,7 @@ class _SingleItemInfoScreenState extends ConsumerState<SingleItemInfoScreen> {
   @override
   Widget build(BuildContext context) {
     final itemState = ref.watch(singleItemProvider(widget.id));
+
     Widget body = switch (itemState) {
       AsyncData(value: final item) =>
         item == null ? Text('Loading...') : SingleItemInfo(item: item),
@@ -28,6 +28,7 @@ class _SingleItemInfoScreenState extends ConsumerState<SingleItemInfoScreen> {
       ),
       _ => Center(child: CircularProgressIndicator()),
     };
+
     return Scaffold(
       appBar: AppBar(
         title:

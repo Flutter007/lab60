@@ -3,12 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/helpers/date_format.dart';
 import 'package:lab60/providers/items_locations_categories_date_providers.dart';
 import 'package:lab60/widgets/custom_text.dart';
-
 import '../models/item.dart';
 
 class SingleItemInfo extends ConsumerWidget {
   final Item item;
-
   const SingleItemInfo({super.key, required this.item});
 
   @override
@@ -19,6 +17,7 @@ class SingleItemInfo extends ConsumerWidget {
     final itemLocation = ref.watch(
       itemLocationByIdProvider(item.itemLocationId),
     );
+
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
