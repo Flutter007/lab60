@@ -1,8 +1,8 @@
 class Item {
   final String? id;
   final String name;
-  final String itemCategoryId;
-  final String itemLocationId;
+  final Map<String, String> itemCategory;
+  final Map<String, String> itemLocation;
   final String? description;
   final String imageURL;
   final DateTime registeredAt;
@@ -10,8 +10,8 @@ class Item {
   Item({
     this.id,
     required this.name,
-    required this.itemCategoryId,
-    required this.itemLocationId,
+    required this.itemCategory,
+    required this.itemLocation,
     this.description,
     required this.imageURL,
     required this.registeredAt,
@@ -19,8 +19,8 @@ class Item {
   Map<String?, dynamic> toJson() {
     return {
       'name': name,
-      'itemCategoryId': itemCategoryId,
-      'itemLocationId': itemLocationId,
+      'itemCategoryId': itemCategory,
+      'itemLocationId': itemLocation,
       if (description != null) 'description': description,
       'imageURL': imageURL,
       'registeredAt': registeredAt.toUtc().toIso8601String(),
@@ -31,8 +31,8 @@ class Item {
     return Item(
       id: json['id'],
       name: json['name'],
-      itemCategoryId: json['itemCategoryId'],
-      itemLocationId: json['itemLocationId'],
+      itemCategory: json['itemCategoryId'],
+      itemLocation: json['itemLocationId'],
       description: json.containsKey('description') ? json['description'] : null,
       imageURL: json['imageURL'],
       registeredAt: DateTime.parse(json['registeredAt']),

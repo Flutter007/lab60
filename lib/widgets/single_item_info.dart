@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/helpers/date_format.dart';
-import 'package:lab60/providers/items_locations_categories_date_providers.dart';
 import 'package:lab60/widgets/custom_text.dart';
+
 import '../models/item.dart';
 
 class SingleItemInfo extends ConsumerWidget {
@@ -11,12 +11,8 @@ class SingleItemInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemCategory = ref.watch(
-      itemCategoryByIdProvider(item.itemCategoryId),
-    );
-    final itemLocation = ref.watch(
-      itemLocationByIdProvider(item.itemLocationId),
-    );
+    final itemCategory = item.itemCategory;
+    final itemLocation = item.itemLocation;
 
     return SingleChildScrollView(
       child: Column(
@@ -29,19 +25,19 @@ class SingleItemInfo extends ConsumerWidget {
           ),
           ListTile(
             title: CustomText(txt: 'Category ⬇ :'),
-            subtitle: Text(itemCategory.title),
+            subtitle: Text(itemCategory['title']!),
           ),
           ListTile(
             title: CustomText(txt: 'Category description ⬇:'),
-            subtitle: Text(itemCategory.description),
+            subtitle: Text(itemCategory['description']!),
           ),
           ListTile(
             title: CustomText(txt: 'Location 📍 :'),
-            subtitle: Text(itemLocation.title),
+            subtitle: Text(itemLocation['title']!),
           ),
           ListTile(
             title: CustomText(txt: 'Location description ⬇ :'),
-            subtitle: Text(itemLocation.description),
+            subtitle: Text(itemLocation['description']!),
           ),
           if (item.description != null)
             ListTile(

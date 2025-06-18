@@ -50,10 +50,6 @@ class _AddItemFormState extends ConsumerState<AddItemForm> {
 
   @override
   Widget build(BuildContext context) {
-    final itemCategory = ref.watch(selectedItemCategory);
-    final itemCategoriesProvider = ref.watch(itemsCategoriesProvider);
-    final itemLocation = ref.watch(selectedItemLocation);
-    final itemLocationsProvider = ref.watch(itemsLocationProvider);
     final itemAddingState = ref.watch(createItemProvider);
 
     return Form(
@@ -73,41 +69,6 @@ class _AddItemFormState extends ConsumerState<AddItemForm> {
               controller: widget.controllers.nameController,
             ),
             SizedBox(height: 20),
-            DropdownMenu(
-              label: Text('Choose category'),
-              width: 370,
-              key: ValueKey('dropdown-category-$itemCategory'),
-              onSelected: (value) {
-                ref.read(selectedItemCategory.notifier).state = value;
-              },
-              initialSelection: itemCategory,
-              errorText:
-                  widget.isCategoryError ? 'Please choose category' : null,
-              dropdownMenuEntries:
-                  itemCategoriesProvider
-                      .map(
-                        (c) => DropdownMenuEntry(value: c.id, label: c.title),
-                      )
-                      .toList(),
-            ),
-            SizedBox(height: 20),
-            DropdownMenu(
-              label: Text('Choose location'),
-              width: 370,
-              key: ValueKey('dropdown-location-$itemLocation'),
-              onSelected: (value) {
-                ref.read(selectedItemLocation.notifier).state = value;
-              },
-              initialSelection: itemLocation,
-              errorText:
-                  widget.isLocationError ? 'Please choose location' : null,
-              dropdownMenuEntries:
-                  itemLocationsProvider
-                      .map(
-                        (c) => DropdownMenuEntry(value: c.id, label: c.title),
-                      )
-                      .toList(),
-            ),
             CustomTextFormField(
               controller: widget.controllers.descriptionController,
               validator: null,

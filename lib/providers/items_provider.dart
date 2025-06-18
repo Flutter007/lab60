@@ -34,15 +34,14 @@ class CreateItemNotifier extends AsyncNotifier<void> {
   build() {}
   Future<void> createItem(AddItemFormControllers controller) async {
     final url = '$baseURl/items.json';
-    final selectedCategory = ref.read(selectedItemCategory);
-    final selectedLocation = ref.read(selectedItemLocation);
+
     final selectedDate = ref.read(selectedDateProvider);
     state = AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final item = Item(
         name: controller.nameController.text.trim(),
-        itemCategoryId: selectedCategory!,
-        itemLocationId: selectedLocation!,
+        itemCategory: {},
+        itemLocation: {},
         imageURL: controller.imageURLController.text.trim(),
         description:
             controller.descriptionController.text.trim().isEmpty
