@@ -10,4 +10,12 @@ class ItemCategory {
     required this.description,
     required this.imageURL,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'imageURL': imageURL,
+    };
+  }
 }

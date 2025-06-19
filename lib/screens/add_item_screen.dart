@@ -17,23 +17,12 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
   bool isCategoryError = false;
   bool isLocationError = false;
 
-  bool checkCategoryAndLocationState() {
-    final selectedCategory = ref.read(selectedItemCategory);
-    final selectedLocation = ref.read(selectedItemLocation);
-    setState(() {
-      isCategoryError = selectedCategory == null;
-      isLocationError = selectedLocation == null;
-    });
-    return isCategoryError || isLocationError;
-  }
-
   void _showScaffoldMessage(String txt) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(txt)));
   }
 
   void addItem() async {
-    bool isSelectedError = checkCategoryAndLocationState();
-    if (controllers.formKey.currentState!.validate() && !isSelectedError) {
+    if (controllers.formKey.currentState!.validate()) {
       await ref.read(createItemProvider.notifier).createItem(controllers);
       if (mounted) {
         clearControllers();

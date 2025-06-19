@@ -38,7 +38,7 @@ class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
             )
             : ItemsListViewBuilder(items: items),
       AsyncError() => CenterEventContainer(
-        title: 'Something went wrong..',
+        title: 'Something went wrong...',
         iconData: Icons.error,
         buttonText: 'Try again',
         onButtonPressed: () => ref.refresh(itemListProvider),
