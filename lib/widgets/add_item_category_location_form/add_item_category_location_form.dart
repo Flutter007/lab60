@@ -1,18 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/widgets/center_indicator.dart';
+import 'package:lab60/widgets/image_picker_field.dart';
 
 import '../custom_text_form_field.dart';
-import 'add_item_category_form_controllers.dart';
+import 'add_item_category_location_form_controllers.dart';
 
 class AddItemCategoryLocationForm extends ConsumerStatefulWidget {
   final AddItemCategoryLocationFormControllers controller;
+  final StateProvider<File?> imageProvider;
   final String titleFieldText;
   final String descriptionFieldText;
-  final String imageURLFieldText;
   final String? Function(String?)? titleValidator;
   final String? Function(String?)? descriptionValidator;
-  final String? Function(String?)? imageURLValidator;
   final void Function()? addNewItem;
   final bool isLoading;
 
@@ -22,11 +24,10 @@ class AddItemCategoryLocationForm extends ConsumerStatefulWidget {
     required this.addNewItem,
     required this.titleFieldText,
     required this.descriptionFieldText,
-    required this.imageURLFieldText,
     required this.titleValidator,
     required this.descriptionValidator,
-    required this.imageURLValidator,
     required this.isLoading,
+    required this.imageProvider,
   });
 
   @override
@@ -52,10 +53,11 @@ class _AddItemCategoryFormState
             validator: widget.descriptionValidator,
             controller: widget.controller.descriptionController,
           ),
-          CustomTextFormField(
-            labelText: widget.imageURLFieldText,
-            validator: widget.imageURLValidator,
-            controller: widget.controller.imageURLController,
+          ImagePickerField(
+            onPickImage: (image) {
+              ref.read(widget.imageProvider.notifier).state = image;
+            },
+            imageProvider: widget.imageProvider,
           ),
           ElevatedButton.icon(
             onPressed: widget.isLoading ? null : widget.addNewItem,

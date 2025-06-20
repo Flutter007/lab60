@@ -10,6 +10,11 @@ class ItemLocation {
     required this.description,
     required this.imageURL,
   });
+
+  Map<String, dynamic> toJson() {
+    return {'title': title, 'description': description, 'imageURL': imageURL};
+  }
+
   factory ItemLocation.fromJson(Map<String, dynamic> json) {
     return ItemLocation(
       id: json['id'],
@@ -17,8 +22,5 @@ class ItemLocation {
       description: json['description'],
       imageURL: json['imageURL'],
     );
-  }
-  Map<String, dynamic> toJson() {
-    return {'title': title, 'description': description, 'imageURL': imageURL};
   }
 }

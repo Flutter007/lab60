@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/helpers/date_format.dart';
+import 'package:lab60/providers/image_upload_provider.dart';
 import 'package:lab60/widgets/custom_text.dart';
-
 import '../models/item.dart';
+import 'image_container.dart';
 
 class SingleItemInfo extends ConsumerWidget {
   final Item item;
@@ -11,9 +12,6 @@ class SingleItemInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemCategory = item.itemCategoryId;
-    final itemLocation = item.itemLocationId;
-
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -25,38 +23,51 @@ class SingleItemInfo extends ConsumerWidget {
           ),
           ListTile(
             title: CustomText(txt: 'Category ⬇ :'),
-            subtitle: Text(itemCategory!),
+            subtitle: Text(item.itemCategory!.title),
           ),
           ListTile(
             title: CustomText(txt: 'Category description ⬇:'),
-            subtitle: Text(itemCategory),
+            subtitle: Text(item.itemCategory!.description),
           ),
           ListTile(
             title: CustomText(txt: 'Location 📍 :'),
-            subtitle: Text(itemLocation!),
+            subtitle: Text(item.itemLocation!.title),
           ),
           ListTile(
             title: CustomText(txt: 'Location description ⬇ :'),
-            subtitle: Text(itemLocation),
+            subtitle: Text(item.itemLocation!.description),
           ),
           if (item.description != null)
             ListTile(
               title: CustomText(txt: 'Description :'),
               subtitle: Text(item.description!),
             ),
-          CustomText(txt: 'Image of item ⬇'),
-          Container(
-            width: 200,
-            height: 180,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              image: DecorationImage(
-                image: NetworkImage(item.imageURL),
-                fit: BoxFit.fill,
-              ),
-            ),
-            margin: EdgeInsets.all(20),
+
+          ImageContainer(
+            imageDescription: 'Image of item ⬇',
+            imageURL: ref
+                .read(uploadImageProvider.notifier)
+                .getImageUrl(item.imageURL, 'items_images'),
           ),
+          ImageContainer(
+            imageDescription: 'Image of category ⬇',
+            imageURL: ref
+                .read(uploadImageProvider.notifier)
+                .getImageUrl(
+                  item.itemCategory!.imageURL,
+                  'items_categories_images',
+                ),
+          ),
+          ImageContainer(
+            imageDescription: 'Image of location ⬇',
+            imageURL: ref
+                .read(uploadImageProvider.notifier)
+                .getImageUrl(
+                  item.itemLocation!.imageURL,
+                  'items_locations_images',
+                ),
+          ),
+
           ListTile(
             title: CustomText(txt: 'Date of registration 🕐 :'),
             subtitle: Text(dateFormat.format(item.registeredAt)),

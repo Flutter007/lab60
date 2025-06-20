@@ -35,14 +35,18 @@ class Item {
     };
   }
 
-  factory Item.fromJson(Map<String, dynamic> json) {
+  factory Item.fromJson(
+    Map<String, dynamic> json,
+    ItemCategory itemCategory,
+    ItemLocation itemLocation,
+  ) {
     return Item(
       id: json['id'],
       name: json['name'],
       itemCategoryId: json['itemCategoryId'],
-
+      itemCategory: itemCategory,
       itemLocationId: json['itemLocationId'],
-
+      itemLocation: itemLocation,
       description: json.containsKey('description') ? json['description'] : null,
       imageURL: json['imageURL'],
       registeredAt: DateTime.parse(json['registeredAt']),

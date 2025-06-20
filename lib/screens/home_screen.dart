@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
+
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

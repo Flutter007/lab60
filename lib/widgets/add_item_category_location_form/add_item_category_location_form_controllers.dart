@@ -4,10 +4,9 @@ class AddItemCategoryLocationFormControllers {
   final formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
-  final imageURLController = TextEditingController();
+
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
-    imageURLController.dispose();
   }
 }

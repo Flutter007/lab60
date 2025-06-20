@@ -16,7 +16,7 @@ class ImageUploadProvider extends AsyncNotifier<void> {
 
   String getImageUrl(String fileName, String table) {
     final supaBase = Supabase.instance.client;
-    final url = supaBase.storage.from(table).getPublicUrl(fileName);
+    final url = supaBase.storage.from('images/$table').getPublicUrl(fileName);
     return url;
   }
 }
@@ -24,3 +24,7 @@ class ImageUploadProvider extends AsyncNotifier<void> {
 final uploadImageProvider = AsyncNotifierProvider<ImageUploadProvider, void>(
   ImageUploadProvider.new,
 );
+
+final selectedCategoryImage = StateProvider<File?>((ref) => null);
+final selectedLocationImage = StateProvider<File?>((ref) => null);
+final selectedItemImage = StateProvider<File?>((ref) => null);
