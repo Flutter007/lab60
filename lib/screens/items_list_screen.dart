@@ -56,6 +56,7 @@ class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
           ),
         ],
       ),
+
       body: body,
     );
   }

@@ -38,7 +38,7 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
           _showScaffoldMessage('Successfully added');
         },
         error: (e, stack) {
-          _showScaffoldMessage('Something went wrong...');
+          _showScaffoldMessage(e.toString());
         },
       );
     });

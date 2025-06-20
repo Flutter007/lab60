@@ -1,8 +1,13 @@
+import 'package:lab60/models/item_category.dart';
+import 'package:lab60/models/item_location.dart';
+
 class Item {
   final String? id;
   final String name;
-  final Map<String, dynamic> itemCategory;
-  final Map<String, dynamic> itemLocation;
+  final String? itemCategoryId;
+  final ItemCategory? itemCategory;
+  final String? itemLocationId;
+  final ItemLocation? itemLocation;
   final String? description;
   final String imageURL;
   final DateTime registeredAt;
@@ -10,8 +15,10 @@ class Item {
   Item({
     this.id,
     required this.name,
-    required this.itemCategory,
-    required this.itemLocation,
+    required this.itemCategoryId,
+    this.itemCategory,
+    required this.itemLocationId,
+    this.itemLocation,
     this.description,
     required this.imageURL,
     required this.registeredAt,
@@ -20,8 +27,8 @@ class Item {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'itemCategory': itemCategory,
-      'itemLocation': itemLocation,
+      'itemCategoryId': itemCategoryId,
+      'itemLocationId': itemLocationId,
       if (description != null) 'description': description,
       'imageURL': imageURL,
       'registeredAt': registeredAt.toUtc().toIso8601String(),
@@ -32,8 +39,10 @@ class Item {
     return Item(
       id: json['id'],
       name: json['name'],
-      itemCategory: json['itemCategory'],
-      itemLocation: json['itemLocation'],
+      itemCategoryId: json['itemCategoryId'],
+
+      itemLocationId: json['itemLocationId'],
+
       description: json.containsKey('description') ? json['description'] : null,
       imageURL: json['imageURL'],
       registeredAt: DateTime.parse(json['registeredAt']),

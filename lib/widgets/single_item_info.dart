@@ -11,8 +11,8 @@ class SingleItemInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemCategory = item.itemCategory;
-    final itemLocation = item.itemLocation;
+    final itemCategory = item.itemCategoryId;
+    final itemLocation = item.itemLocationId;
 
     return SingleChildScrollView(
       child: Column(
@@ -25,19 +25,19 @@ class SingleItemInfo extends ConsumerWidget {
           ),
           ListTile(
             title: CustomText(txt: 'Category ⬇ :'),
-            subtitle: Text(itemCategory['title']!),
+            subtitle: Text(itemCategory!),
           ),
           ListTile(
             title: CustomText(txt: 'Category description ⬇:'),
-            subtitle: Text(itemCategory['description']!),
+            subtitle: Text(itemCategory),
           ),
           ListTile(
             title: CustomText(txt: 'Location 📍 :'),
-            subtitle: Text(itemLocation['title']!),
+            subtitle: Text(itemLocation!),
           ),
           ListTile(
             title: CustomText(txt: 'Location description ⬇ :'),
-            subtitle: Text(itemLocation['description']!),
+            subtitle: Text(itemLocation),
           ),
           if (item.description != null)
             ListTile(

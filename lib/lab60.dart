@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lab60/screens/items_list_screen.dart';
+import 'package:lab60/screens/home_screen.dart';
 import 'package:lab60/theme/light_theme.dart';
 
 class Lab60 extends ConsumerWidget {
@@ -11,7 +11,7 @@ class Lab60 extends ConsumerWidget {
     return MaterialApp(
       themeMode: ThemeMode.system,
       theme: lightTheme,
-      home: ItemsListScreen(),
+      home: HomeScreen(),
     );
   }
 }
