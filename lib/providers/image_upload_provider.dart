@@ -3,20 +3,24 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+final supaBase = Supabase.instance.client;
+
+final selectedCategoryImage = StateProvider<File?>((ref) => null);
+final selectedLocationImage = StateProvider<File?>((ref) => null);
+final selectedItemImage = StateProvider<File?>((ref) => null);
+
 class ImageUploadProvider extends AsyncNotifier<void> {
   @override
   build() {}
-  Future<void> uploadImage(File image, String fileName, String table) async {
+  Future<void> uploadImage(File image, String fileName, String folder) async {
     state = AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      final supaBase = Supabase.instance.client;
-      await supaBase.storage.from('images/$table').update(fileName, image);
+      await supaBase.storage.from('images/$folder').update(fileName, image);
     });
   }
 
-  String getImageUrl(String fileName, String table) {
-    final supaBase = Supabase.instance.client;
-    final url = supaBase.storage.from('images/$table').getPublicUrl(fileName);
+  String getImageUrl(String fileName, String folder) {
+    final url = supaBase.storage.from('images/$folder').getPublicUrl(fileName);
     return url;
   }
 }
@@ -24,7 +28,3 @@ class ImageUploadProvider extends AsyncNotifier<void> {
 final uploadImageProvider = AsyncNotifierProvider<ImageUploadProvider, void>(
   ImageUploadProvider.new,
 );
-
-final selectedCategoryImage = StateProvider<File?>((ref) => null);
-final selectedLocationImage = StateProvider<File?>((ref) => null);
-final selectedItemImage = StateProvider<File?>((ref) => null);

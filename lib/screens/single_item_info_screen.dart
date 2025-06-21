@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/providers/items_provider.dart';
+import 'package:lab60/widgets/center_indicator.dart';
 import 'package:lab60/widgets/single_item_info.dart';
 import '../widgets/center_event_container.dart';
 
@@ -26,7 +27,7 @@ class _SingleItemInfoScreenState extends ConsumerState<SingleItemInfoScreen> {
         buttonText: 'Try again',
         onButtonPressed: () => ref.invalidate(singleItemProvider(widget.id)),
       ),
-      _ => Center(child: CircularProgressIndicator()),
+      _ => CenterIndicator(),
     };
 
     return Scaffold(

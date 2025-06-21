@@ -124,12 +124,7 @@ class _AddItemFormState extends ConsumerState<AddItemForm> {
                 isError: widget.isLocationError,
               ),
               SizedBox(height: 20),
-              ImagePickerField(
-                onPickImage: (image) {
-                  ref.read(selectedItemImage.notifier).state = image;
-                },
-                imageProvider: selectedItemImage,
-              ),
+              ImagePickerField(imageProvider: selectedItemImage),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextField(

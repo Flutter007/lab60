@@ -5,6 +5,8 @@ import 'package:lab60/models/item_location.dart';
 import 'package:lab60/widgets/add_item_category_location_form/add_item_category_location_form_controllers.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+final supaBase = Supabase.instance.client;
+
 final selectedItemCategory = StateProvider<String?>((ref) => null);
 final selectedItemLocation = StateProvider<String?>((ref) => null);
 final selectedDateProvider = StateProvider<DateTime>(
@@ -13,7 +15,6 @@ final selectedDateProvider = StateProvider<DateTime>(
 );
 
 final itemCategoriesProvider = FutureProvider<List<ItemCategory>>((ref) async {
-  final supaBase = Supabase.instance.client;
   final response = await supaBase.from('itemCategories').select();
   List<ItemCategory> itemCategories = [];
   for (var row in response) {
@@ -24,7 +25,6 @@ final itemCategoriesProvider = FutureProvider<List<ItemCategory>>((ref) async {
 });
 
 final itemLocationsProvider = FutureProvider<List<ItemLocation>>((ref) async {
-  final supaBase = Supabase.instance.client;
   final response = await supaBase.from('itemLocations').select();
   List<ItemLocation> itemLocations = [];
   for (var row in response) {
@@ -44,7 +44,6 @@ class CreateItemCategoryLocationNotifier extends AsyncNotifier<void> {
   }) async {
     state = AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      final supaBase = Supabase.instance.client;
       if (classType == 'itemCategories') {
         final itemCategory = ItemCategory(
           title: controller.titleController.text.trim(),
@@ -68,28 +67,3 @@ final createItemCategoryLocationProvider =
     AsyncNotifierProvider<CreateItemCategoryLocationNotifier, void>(
       CreateItemCategoryLocationNotifier.new,
     );
-
-// class CreateItemLocationNotifier extends AsyncNotifier<void> {
-//   @override
-//   build() {}
-//   Future<void> createItemLocation(
-//     AddItemCategoryLocationFormControllers controller,
-//     String fileName,
-//   ) async {
-//     state = AsyncValue.loading();
-//     state = await AsyncValue.guard(() async {
-//       final supaBase = Supabase.instance.client;
-//       final itemLocation = ItemLocation(
-//         title: controller.titleController.text.trim(),
-//         description: controller.descriptionController.text.trim(),
-//         imageURL: fileName,
-//       );
-//       await supaBase.from('itemLocations').insert(itemLocation.toJson());
-//     });
-//   }
-// }
-//
-// final createItemLocationProvider =
-//     AsyncNotifierProvider<CreateItemLocationNotifier, void>(
-//       CreateItemLocationNotifier.new,
-//     );

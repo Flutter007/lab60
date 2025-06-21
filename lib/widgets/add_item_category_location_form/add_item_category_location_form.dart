@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lab60/widgets/center_indicator.dart';
 import 'package:lab60/widgets/image_picker_field.dart';
-
 import '../custom_text_form_field.dart';
 import 'add_item_category_location_form_controllers.dart';
 
@@ -53,12 +51,8 @@ class _AddItemCategoryFormState
             validator: widget.descriptionValidator,
             controller: widget.controller.descriptionController,
           ),
-          ImagePickerField(
-            onPickImage: (image) {
-              ref.read(widget.imageProvider.notifier).state = image;
-            },
-            imageProvider: widget.imageProvider,
-          ),
+          ImagePickerField(imageProvider: widget.imageProvider),
+          SizedBox(height: 20),
           ElevatedButton.icon(
             onPressed: widget.isLoading ? null : widget.addNewItem,
             label:

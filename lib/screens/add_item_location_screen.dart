@@ -23,7 +23,7 @@ class _AddItemLocationScreenState extends ConsumerState<AddItemLocationScreen> {
   }
 
   void onSave() async {
-    var image = ref.read(selectedLocationImage.notifier).state;
+    var image = ref.read(selectedLocationImage);
     final now = DateTime.now();
     if (controller.formKey.currentState!.validate() && image != null) {
       final fileName =

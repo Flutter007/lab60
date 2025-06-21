@@ -5,9 +5,6 @@ class CenterIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [Center(child: CircularProgressIndicator(strokeWidth: 2))],
-    );
+    return Center(child: CircularProgressIndicator(strokeWidth: 2));
   }
 }

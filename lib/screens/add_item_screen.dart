@@ -25,8 +25,8 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
   }
 
   bool isSelected() {
-    final selectedCategory = ref.read(selectedItemCategory.notifier).state;
-    final selectedLocation = ref.read(selectedItemLocation.notifier).state;
+    final selectedCategory = ref.read(selectedItemCategory);
+    final selectedLocation = ref.read(selectedItemLocation);
     setState(() {
       isCategoryError = selectedCategory == null;
       isLocationError = selectedLocation == null;
@@ -36,7 +36,7 @@ class _AddItemScreenState extends ConsumerState<AddItemScreen> {
 
   void addItem() async {
     bool isError = isSelected();
-    final image = ref.watch(selectedItemImage.notifier).state;
+    final image = ref.watch(selectedItemImage);
     final now = DateTime.now();
     if (controllers.formKey.currentState!.validate() &&
         image != null &&

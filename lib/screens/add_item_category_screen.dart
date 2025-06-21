@@ -23,7 +23,7 @@ class _AddItemCategoryScreenState extends ConsumerState<AddItemCategoryScreen> {
   }
 
   void onSave() async {
-    final image = ref.read(selectedCategoryImage.notifier).state;
+    final image = ref.read(selectedCategoryImage);
     final now = DateTime.now();
     if (controller.formKey.currentState!.validate() && image != null) {
       final fileName =
@@ -92,7 +92,6 @@ class _AddItemCategoryScreenState extends ConsumerState<AddItemCategoryScreen> {
             }
             return null;
           },
-
           isLoading: creatingState,
           imageProvider: selectedCategoryImage,
         ),

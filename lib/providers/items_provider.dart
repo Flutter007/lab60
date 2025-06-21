@@ -7,8 +7,9 @@ import '../models/item_category.dart';
 import '../models/item_location.dart';
 import 'items_locations_categories_date_providers.dart';
 
+final supaBase = Supabase.instance.client;
+
 final itemListProvider = FutureProvider<List<Item>>((ref) async {
-  final supaBase = Supabase.instance.client;
   final response = await supaBase.from('items').select();
   final categories = await supaBase.from('itemCategories').select();
   final locations = await supaBase.from('itemLocations').select();
@@ -58,7 +59,6 @@ class CreateItemNotifier extends AsyncNotifier<void> {
                 : controller.descriptionController.text.trim(),
         registeredAt: selectedDate,
       );
-      final supaBase = Supabase.instance.client;
       await supaBase.from('items').insert(item.toJson());
     });
   }
@@ -72,7 +72,6 @@ final singleItemProvider = FutureProvider.family<Item?, String>((
   ref,
   itemId,
 ) async {
-  final supaBase = Supabase.instance.client;
   final response =
       await supaBase.from('items').select().eq('id', itemId).single();
   final category =

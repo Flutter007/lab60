@@ -1,20 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'add_photo_container.dart';
 
 class ImagePickerField extends ConsumerStatefulWidget {
   final StateProvider<File?> imageProvider;
-  final void Function(File? photo) onPickImage;
 
-  const ImagePickerField({
-    super.key,
-    required this.onPickImage,
-    required this.imageProvider,
-  });
+  const ImagePickerField({super.key, required this.imageProvider});
 
   @override
   ConsumerState<ImagePickerField> createState() => _ImagePickerFieldState();
@@ -35,20 +28,19 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
     setState(() {
       ref.read(widget.imageProvider.notifier).state = photo;
     });
-    widget.onPickImage(photo);
   }
 
   void clearPhoto() {
     setState(() {
       ref.read(widget.imageProvider.notifier).state = null;
     });
-    widget.onPickImage(null);
   }
 
   @override
   Widget build(BuildContext context) {
+    final image = ref.read(widget.imageProvider);
     final theme = Theme.of(context);
-    return ref.read(widget.imageProvider.notifier).state == null
+    return image == null
         ? AddPhotoContainer(
           onCameraTap: () => openImagePicker(ImageSource.camera),
           onGalleryTap: () => openImagePicker(ImageSource.gallery),
@@ -62,7 +54,7 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
               child: Stack(
                 children: [
                   Image.file(
-                    ref.read(widget.imageProvider.notifier).state!,
+                    image,
                     width: width,
                     height: width,
                     fit: BoxFit.cover,

@@ -67,7 +67,6 @@ class SingleItemInfo extends ConsumerWidget {
                   'items_locations_images',
                 ),
           ),
-
           ListTile(
             title: CustomText(txt: 'Date of registration 🕐 :'),
             subtitle: Text(dateFormat.format(item.registeredAt)),
